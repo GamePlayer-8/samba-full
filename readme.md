@@ -1,5 +1,5 @@
 <div align="center">
-<a href="https://codeberg.org/GamePlayer-8/samba"><img src="https://raw.githubusercontent.com/GamePlayer-8/samba/master/.github/logo.png" title="Logo" style="max-width:100%;" width="256" /></a>
+<a href="https://codeberg.org/GamePlayer-8/samba-full"><img src="https://raw.githubusercontent.com/GamePlayer-8/samba-full/master/.github/logo.png" title="Logo" style="max-width:100%;" width="256" /></a>
 </div>
 <div align="center">
 
@@ -22,7 +22,7 @@ services:
   samba:
     restart: always
     build: .
-    image: gameplayer-8/samba
+    image: gameplayer-8/samba-full
     container_name: samba
     environment:
       NAME: "Data"
@@ -55,7 +55,7 @@ services:
 ##### Via Docker CLI:
 
 ```bash
-docker run -it --rm --name samba -p 445:445 -e "USER=samba" -e "PASS=secret" -v "${PWD:-.}/samba:/storage" gameplayer-8/samba
+docker run -it --rm --name samba -p 445:445 -e "USER=samba" -e "PASS=secret" -v "${PWD:-.}/samba:/storage" gameplayer-8/samba-full
 ```
 
 ## Configuration ⚙️
@@ -111,7 +111,7 @@ To mark the share as read-only, add the variable `RW: "false"`.
 
 ### How do I modify other settings?
 
-If you need more advanced features, you can completely override the default configuration by modifying the [smb.conf](https://codeberg.org/GamePlayer-8/samba/blob/master/smb.conf) file in this repo, and binding your custom config to the container like this:
+If you need more advanced features, you can completely override the default configuration by modifying the [smb.conf](https://codeberg.org/GamePlayer-8/samba-full/blob/master/smb.conf) file in this repo, and binding your custom config to the container like this:
 
 ```yaml
 volumes:
@@ -120,7 +120,7 @@ volumes:
 
 ### How do I configure multiple users?
 
-If you want to configure multiple users, you can bind the [users.conf](https://codeberg.org/GamePlayer-8/samba/blob/master/users.conf) file to the container as follows:
+If you want to configure multiple users, you can bind the [users.conf](https://codeberg.org/GamePlayer-8/samba-full/blob/master/users.conf) file to the container as follows:
 
 ```yaml
 volumes:
@@ -140,15 +140,15 @@ where:
 - `homedir` Optional field for setting the home directory of the user. 
 
 ## Stars 🌟
-[![Stars](https://starchart.cc/GamePlayer-8/samba.svg?variant=adaptive)](https://starchart.cc/GamePlayer-8/samba)
+[![Stars](https://starchart.cc/GamePlayer-8/samba-full.svg?variant=adaptive)](https://starchart.cc/GamePlayer-8/samba-full)
 
-[build_url]: https://github.com/GamePlayer-8/samba/
-[hub_url]: https://hub.docker.com/r/gameplayer-8/samba
-[tag_url]: https://hub.docker.com/r/gameplayer-8/samba/tags
-[pkg_url]: https://github.com/GamePlayer-8/samba/pkgs/container/samba
+[build_url]: https://github.com/GamePlayer-8/samba-full/
+[hub_url]: https://hub.docker.com/r/gameplayer-8/samba-full
+[tag_url]: https://hub.docker.com/r/gameplayer-8/samba-full/tags
+[pkg_url]: https://github.com/GamePlayer-8/samba-full/pkgs/container/samba
 
-[Build]: https://github.com/GamePlayer-8/samba/actions/workflows/build.yml/badge.svg
-[Size]: https://img.shields.io/docker/image-size/gameplayer-8/samba/latest?color=066da5&label=size
-[Pulls]: https://img.shields.io/docker/pulls/gameplayer-8/samba.svg?style=flat&label=pulls&logo=docker
-[Version]: https://img.shields.io/docker/v/gameplayer-8/samba/latest?arch=amd64&sort=semver&color=066da5
-[Package]: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fipitio.github.io%2Fbackage%2FGamePlayer-8%2Fsamba%2Fsamba.json&query=%24.downloads&logo=github&style=flat&color=066da5&label=pulls
+[Build]: https://github.com/GamePlayer-8/samba-full/actions/workflows/build.yml/badge.svg
+[Size]: https://img.shields.io/docker/image-size/gameplayer-8/samba-full/latest?color=066da5&label=size
+[Pulls]: https://img.shields.io/docker/pulls/gameplayer-8/samba-full.svg?style=flat&label=pulls&logo=docker
+[Version]: https://img.shields.io/docker/v/gameplayer-8/samba-full/latest?arch=amd64&sort=semver&color=066da5
+[Package]: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fipitio.github.io%2Fbackage%2FGamePlayer-8%2Fsamba-full%2Fsamba.json&query=%24.downloads&logo=github&style=flat&color=066da5&label=pulls
