@@ -2,7 +2,7 @@ name: Update
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - readme.md
       - .github/workflows/hub.yml

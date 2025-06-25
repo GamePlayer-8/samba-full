@@ -1,5 +1,5 @@
 <div align="center">
-<a href="https://codeberg.org/GamePlayer-8/samba-full"><img src="https://raw.githubusercontent.com/GamePlayer-8/samba-full/master/.github/logo.png" title="Logo" style="max-width:100%;" width="256" /></a>
+<a href="https://codeberg.org/GamePlayer-8/samba-full"><img src="https://raw.githubusercontent.com/GamePlayer-8/samba-full/main/.github/logo.png" title="Logo" style="max-width:100%;" width="256" /></a>
 </div>
 <div align="center">
 
@@ -111,7 +111,7 @@ To mark the share as read-only, add the variable `RW: "false"`.
 
 ### How do I modify other settings?
 
-If you need more advanced features, you can completely override the default configuration by modifying the [smb.conf](https://codeberg.org/GamePlayer-8/samba-full/blob/master/smb.conf) file in this repo, and binding your custom config to the container like this:
+If you need more advanced features, you can completely override the default configuration by modifying the [smb.conf](https://codeberg.org/GamePlayer-8/samba-full/blob/main/smb.conf) file in this repo, and binding your custom config to the container like this:
 
 ```yaml
 volumes:
@@ -120,7 +120,7 @@ volumes:
 
 ### How do I configure multiple users?
 
-If you want to configure multiple users, you can bind the [users.conf](https://codeberg.org/GamePlayer-8/samba-full/blob/master/users.conf) file to the container as follows:
+If you want to configure multiple users, you can bind the [users.conf](https://codeberg.org/GamePlayer-8/samba-full/blob/main/users.conf) file to the container as follows:
 
 ```yaml
 volumes:
