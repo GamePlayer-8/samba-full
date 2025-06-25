@@ -2,7 +2,7 @@ services:
   samba:
     restart: always
     build: .
-    image: gameplayer-8/samba
+    image: gameplayer8/samba
     container_name: samba
     hostname: samba # The hostname used by Avahi
     environment:

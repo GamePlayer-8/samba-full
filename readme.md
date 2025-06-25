@@ -22,7 +22,7 @@ services:
   samba:
     restart: always
     build: .
-    image: gameplayer-8/samba-full
+    image: gameplayer8/samba-full
     container_name: samba
     environment:
       NAME: "Data"
@@ -55,7 +55,7 @@ services:
 ##### Via Docker CLI:
 
 ```bash
-docker run -it --rm --name samba -p 445:445 -e "USER=samba" -e "PASS=secret" -v "${PWD:-.}/samba:/storage" gameplayer-8/samba-full
+docker run -it --rm --name samba -p 445:445 -e "USER=samba" -e "PASS=secret" -v "${PWD:-.}/samba:/storage" gameplayer8/samba-full
 ```
 
 ## Configuration ⚙️
@@ -143,12 +143,12 @@ where:
 [![Stars](https://starchart.cc/GamePlayer-8/samba-full.svg?variant=adaptive)](https://starchart.cc/GamePlayer-8/samba-full)
 
 [build_url]: https://github.com/GamePlayer-8/samba-full/
-[hub_url]: https://hub.docker.com/r/gameplayer-8/samba-full
-[tag_url]: https://hub.docker.com/r/gameplayer-8/samba-full/tags
+[hub_url]: https://hub.docker.com/r/gameplayer8/samba-full
+[tag_url]: https://hub.docker.com/r/gameplayer8/samba-full/tags
 [pkg_url]: https://github.com/GamePlayer-8/samba-full/pkgs/container/samba
 
 [Build]: https://github.com/GamePlayer-8/samba-full/actions/workflows/build.yml/badge.svg
-[Size]: https://img.shields.io/docker/image-size/gameplayer-8/samba-full/latest?color=066da5&label=size
-[Pulls]: https://img.shields.io/docker/pulls/gameplayer-8/samba-full.svg?style=flat&label=pulls&logo=docker
-[Version]: https://img.shields.io/docker/v/gameplayer-8/samba-full/latest?arch=amd64&sort=semver&color=066da5
+[Size]: https://img.shields.io/docker/image-size/gameplayer8/samba-full/latest?color=066da5&label=size
+[Pulls]: https://img.shields.io/docker/pulls/gameplayer8/samba-full.svg?style=flat&label=pulls&logo=docker
+[Version]: https://img.shields.io/docker/v/gameplayer8/samba-full/latest?arch=amd64&sort=semver&color=066da5
 [Package]: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fipitio.github.io%2Fbackage%2FGamePlayer-8%2Fsamba-full%2Fsamba.json&query=%24.downloads&logo=github&style=flat&color=066da5&label=pulls
