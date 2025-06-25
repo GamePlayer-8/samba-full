@@ -151,4 +151,4 @@ where:
 [Size]: https://img.shields.io/docker/image-size/gameplayer8/samba-full/latest?color=066da5&label=size
 [Pulls]: https://img.shields.io/docker/pulls/gameplayer8/samba-full.svg?style=flat&label=pulls&logo=docker
 [Version]: https://img.shields.io/docker/v/gameplayer8/samba-full/latest?arch=amd64&sort=semver&color=066da5
-[Package]: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fipitio.github.io%2Fbackage%2FGamePlayer-8%2Fsamba-full%2Fsamba.json&query=%24.downloads&logo=github&style=flat&color=066da5&label=pulls
+[Package]: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fipitio.github.io%2Fbackage%2FGamePlayer-8%2Fsamba-full%2Fsamba-full.json&query=%24.downloads&logo=github&style=flat&color=066da5&label=pulls
