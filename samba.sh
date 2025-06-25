@@ -228,7 +228,7 @@ startWsdd() {
 
         # fallback to poor man's approach if testparm is unavailable or failed for some reason
         if [ -z "$GROUP" ] && [ -r "$config" ]; then
-            GROUP=`grep -i '^\s*workgroup\s*=' "$config" | cut -f2 -d= | tr -d '[:blank:]'`
+            GROUP="$(grep -i '^\s*workgroup\s*=' "$config" | cut -f2 -d= | tr -d '[:blank:]')"
         fi
 
         if [ -n "${GROUP}" ]; then
@@ -243,7 +243,13 @@ startWsdd() {
     fi
     chown wsdd:wsdd "${WSDD_LOG_FILE}"
 
-    start-stop-daemon --start --background --user wsdd:wsdd --make-pidfile --pidfile /var/run/wsdd.pid --stdout "${WSDD_LOG_FILE}" --stderr "${WSDD_LOG_FILE}" --exec /usr/bin/wsdd -- ${WSDD_OPTS}
+    start-stop-daemon \
+	--start --background \
+	--user wsdd:wsdd --make-pidfile \
+	--pidfile /var/run/wsdd.pid \
+	--stdout "${WSDD_LOG_FILE}" \
+	--stderr "${WSDD_LOG_FILE}" \
+	--exec /usr/bin/wsdd -- "${WSDD_OPTS}"
 
     return $?
 }
@@ -277,7 +283,7 @@ startDBUS() {
 
 # Avahi runtime with hostname patches
 startAvahi() {
-    hostname=`grep -i '^\s*server string\s*=' "$config" | cut -f2 -d= | tr -d '[:blank:]'`
+    hostname="$(grep -i '^\s*server string\s*=' "$config" | cut -f2 -d= | tr -d '[:blank:]')"
     echo "$hostname" > /etc/hostname
     startDBUS
     /usr/sbin/avahi-daemon -D
