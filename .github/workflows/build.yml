@@ -107,7 +107,7 @@ jobs:
           annotations: ${{ steps.meta.outputs.annotations }}
           build-args: |
             VERSION_ARG=${{ env.latest_version }}
-     -
+      -
         name: Docker Hub Description
         uses: peter-evans/dockerhub-description@v2
         with:
