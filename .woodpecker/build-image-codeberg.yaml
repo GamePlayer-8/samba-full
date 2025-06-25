@@ -1,0 +1,45 @@
+# Build and publish Docker images for multiple architectures.
+#
+# Pushing an image to codeberg's container registry
+# The package owner will be the repo owner.
+#
+# This config also shows usage of yaml aliases and
+# was taken from https://codeberg.org/6543/docker-images/src/commit/37e29c227717c1c07d2776cddcf14725bf952875/.woodpecker/hello.yml
+
+when:
+  branch: main
+  event: [push, pull_request, manual]
+
+variables:
+  - &file Dockerfile
+  - &repo https://git.chimmie.k.vu/GamePlayer-8/samba-full
+
+steps:
+  dryrun:
+    image: woodpeckerci/plugin-docker-buildx
+    settings:
+      dockerfile: *file
+      platforms: linux/amd64
+      dry_run: true
+      repo: codeberg.org/gameplayer-8/${CI_REPO_NAME}
+      tags: latest
+    # when:
+    #   event: pull_request
+    #   path: *file
+
+  publish:
+    image: woodpeckerci/plugin-docker-buildx
+    settings:
+      insecure: true
+      ipv6: true
+      dockerfile: *file
+      platforms: linux/amd64,linux/arm/v7,linux/arm64,linux/riscv64
+      repo: codeberg.org/gameplayer-8/${CI_REPO_NAME}
+      registry: codeberg.org
+      tags: latest
+      username: gameplayer-8
+      password:
+        from_secret: OCI_TOKEN
+    # when:
+    #   event: push
+    #   path: *file
