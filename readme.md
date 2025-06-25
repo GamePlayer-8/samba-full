@@ -145,7 +145,7 @@ where:
 [build_url]: https://github.com/GamePlayer-8/samba-full/
 [hub_url]: https://hub.docker.com/r/gameplayer8/samba-full
 [tag_url]: https://hub.docker.com/r/gameplayer8/samba-full/tags
-[pkg_url]: https://github.com/GamePlayer-8/samba-full/pkgs/container/samba
+[pkg_url]: https://github.com/GamePlayer-8/samba-full/pkgs/container/samba-full
 
 [Build]: https://github.com/GamePlayer-8/samba-full/actions/workflows/build.yml/badge.svg
 [Size]: https://img.shields.io/docker/image-size/gameplayer8/samba-full/latest?color=066da5&label=size
