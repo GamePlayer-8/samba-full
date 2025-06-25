@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
-set -Eeuo pipefail
+
+# Workaround for OpenRC patching, help wanted
+#set -Eeuo pipefail
+
 
 # This function checks for the existence of a specified Samba user and group. If the user does not exist, 
 # it creates a new user with the provided username, user ID (UID), group name, group ID (GID), and password. 
@@ -189,10 +192,101 @@ ln -sf "$config" /etc/samba.conf
 [ -d /var/log/samba/cores ] && chmod -R 0700 /var/log/samba/cores
 [ -d /var/cache/samba/msg.lock ] && chmod -R 0755 /var/cache/samba/msg.lock
 
-# Start the Samba daemon with the following options:
+# Start the Samba daemons with the following options:
 #  --configfile: Location of the configuration file.
 #  --foreground: Run in the foreground instead of daemonizing.
 #  --debug-stdout: Send debug output to stdout.
 #  --debuglevel=1: Set debug verbosity level to 1.
 #  --no-process-group: Don't create a new process group for the daemon.
-exec smbd --configfile="$config" --foreground --debug-stdout --debuglevel=1 --no-process-group
+
+startUp() {
+    exec "$1" --configfile="$config" --foreground --debug-stdout --debuglevel=1 --no-process-group &
+    eval "export ${1}_pid=$!"
+}
+
+# Start each daemon in order as it is in OpenRC Alpine configuration
+for daemon in $DAEMON_LIST; do
+    startUp "$daemon"
+done
+
+# WSDD daemon runtime based upon OpenRC config
+startWsdd() {
+
+    if [ -z "$WSDD_OPTS" ]; then
+        WSDD_OPTS="-i 0.0.0.0 -i ::/0"
+    fi
+
+    if [ -z "$WSDD_LOG_FILE" ]; then
+        WSDD_LOG_FILE="/var/log/wsdd.log"
+    fi
+
+    if [ -z "$WSDD_WORKGROUP" ]; then
+        # try to extract workgroup with Samba's testparm
+        if which testparm >/dev/null 2>/dev/null; then
+            GROUP="$(testparm -s --parameter-name workgroup 2>/dev/null)"
+        fi
+
+        # fallback to poor man's approach if testparm is unavailable or failed for some reason
+        if [ -z "$GROUP" ] && [ -r "$config" ]; then
+            GROUP=`grep -i '^\s*workgroup\s*=' "$config" | cut -f2 -d= | tr -d '[:blank:]'`
+        fi
+
+        if [ -n "${GROUP}" ]; then
+            WSDD_OPTS="-w ${GROUP} ${WSDD_OPTS}"
+        fi
+    else
+        WSDD_OPTS="-w ${WSDD_WORKGROUP} ${WSDD_OPTS}"
+    fi
+
+    if [ ! -r "${WSDD_LOG_FILE}" ]; then
+        touch "${WSDD_LOG_FILE}"
+    fi
+    chown wsdd:wsdd "${WSDD_LOG_FILE}"
+
+    start-stop-daemon --start --background --user wsdd:wsdd --make-pidfile --pidfile /var/run/wsdd.pid --stdout "${WSDD_LOG_FILE}" --stderr "${WSDD_LOG_FILE}" --exec /usr/bin/wsdd -- ${WSDD_OPTS}
+
+    return $?
+}
+
+# Whenever WSDD is enabled on boot
+if [ "$WSDD" = "1" ]; then
+    startWsdd
+fi
+
+# Workaround for DBus to have unique machine ID
+generateMachineID() {
+    # If machine-id is already predefined - pass
+    if [ -s /etc/machine-id ] ; then
+        return 0
+    fi
+
+    dd if=/dev/random status=none bs=16 count=1 \
+        | md5sum | cut -d' ' -f1 > /etc/machine-id
+    return $?
+}
+
+# DBus runtime
+startDBUS() {
+    generateMachineID
+    install -m755 -o root -g messagebus -d /run/dbus || return 1
+
+    /usr/bin/dbus-uuidgen --ensure="${machine_id:-/etc/machine-id}"
+
+    /usr/bin/dbus-daemon --system --fork --nopidfile --nosyslog
+}
+
+# Avahi runtime with hostname patches
+startAvahi() {
+    hostname=`grep -i '^\s*server string\s*=' "$config" | cut -f2 -d= | tr -d '[:blank:]'`
+    echo "$hostname" > /etc/hostname
+    startDBUS
+    /usr/sbin/avahi-daemon -D
+    return $?
+}
+
+# Avahi
+if [ "$AVAHI" = "1" ]; then
+    startAvahi
+fi
+
+eval "wait \$$(echo "$DAEMON_LIST" | cut -f1 -d ' ')_pid" # Workaround to daemonize shell script

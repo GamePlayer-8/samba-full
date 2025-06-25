@@ -1,7 +1,10 @@
 services:
   samba:
-    image: dockurr/samba
+    restart: always
+    build: .
+    image: gameplayer-8/samba
     container_name: samba
+    hostname: samba # The hostname used by Avahi
     environment:
       NAME: "Data"
       USER: "samba"
@@ -9,8 +12,23 @@ services:
       RW: true      # Optional, default true
       UID: 1000    # Optional, default 1000
       GID: 1000    # Optional, default 1000
+      AVAHI: "1"    # Optional, Enabled by default
+      WSDD: "1"    # Optional, Enabled by default
+      WSDD_OPTS: "-i 0.0.0.0 -i ::/0" # Optional, default value
+      DAEMON_LIST: "smbd nmbd winbindd" # Optional, default value
+    # You can comment the ports section if using networking mode = host
     ports:
-      - 445:445
+      - 135:135/tcp # Optional, nmbd
+      - 137:137/udp
+      - 138:138/udp
+      - 139:139/tcp
+      - 445:445/tcp
+      - 3702:3702/udp # Optional, WSDD
+      - 5353:5353/udp # Optional, Avahi
+      - 5353:5353/tcp # Optional, Avahi
+      - 5357:5357/tcp # Optional, WSDD
+      - 5358:5358/tcp # Optional, WSDD
     volumes:
       - ./samba:/storage
-    restart: always
+    network_mode: "host" # For better service discovery if you're not running route reflector on the host
+

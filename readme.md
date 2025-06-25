@@ -1,5 +1,5 @@
 <div align="center">
-<a href="https://github.com/dockur/samba"><img src="https://raw.githubusercontent.com/dockur/samba/master/.github/logo.png" title="Logo" style="max-width:100%;" width="256" /></a>
+<a href="https://codeberg.org/GamePlayer-8/samba"><img src="https://raw.githubusercontent.com/GamePlayer-8/samba/master/.github/logo.png" title="Logo" style="max-width:100%;" width="256" /></a>
 </div>
 <div align="center">
 
@@ -11,7 +11,7 @@
 
 </div></h1>
 
-Docker container of [Samba](https://www.samba.org/), an implementation of the Windows SMB networking protocol.
+Docker container of [Samba](https://www.samba.org/), [Avahi](https://avahi.org/) and [WSDD](https://github.com/christgau/wsdd), an implementation of the Windows SMB networking protocol.
 
 ## Usage  🐳
 
@@ -20,23 +20,42 @@ Docker container of [Samba](https://www.samba.org/), an implementation of the Wi
 ```yaml
 services:
   samba:
-    image: dockurr/samba
+    restart: always
+    build: .
+    image: gameplayer-8/samba
     container_name: samba
     environment:
       NAME: "Data"
       USER: "samba"
       PASS: "secret"
+      RW: true      # Optional, default true
+      UID: 1000    # Optional, default 1000
+      GID: 1000    # Optional, default 1000
+      AVAHI: "1"    # Optional, Enabled by default
+      WSDD: "1"    # Optional, Enabled by default
+      WSDD_OPTS: "-i 0.0.0.0 -i ::/0" # Optional, default value
+      DAEMON_LIST: "smbd nmbd winbindd" # Optional, default value
+    # You can comment the ports section if using networking mode = host
     ports:
-      - 445:445
+      - 135:135/tcp # Optional, nmbd
+      - 137:137/udp
+      - 138:138/udp
+      - 139:139/tcp
+      - 445:445/tcp
+      - 3702:3702/udp # Optional, WSDD
+      - 5353:5353/udp # Optional, Avahi
+      - 5353:5353/tcp # Optional, Avahi
+      - 5357:5357/tcp # Optional, WSDD
+      - 5358:5358/tcp # Optional, WSDD
     volumes:
       - ./samba:/storage
-    restart: always
+    network_mode: "host" # For better service discovery if you're not running route reflector on the host
 ```
 
 ##### Via Docker CLI:
 
 ```bash
-docker run -it --rm --name samba -p 445:445 -e "USER=samba" -e "PASS=secret" -v "${PWD:-.}/samba:/storage" dockurr/samba
+docker run -it --rm --name samba -p 445:445 -e "USER=samba" -e "PASS=secret" -v "${PWD:-.}/samba:/storage" gameplayer-8/samba
 ```
 
 ## Configuration ⚙️
@@ -92,7 +111,7 @@ To mark the share as read-only, add the variable `RW: "false"`.
 
 ### How do I modify other settings?
 
-If you need more advanced features, you can completely override the default configuration by modifying the [smb.conf](https://github.com/dockur/samba/blob/master/smb.conf) file in this repo, and binding your custom config to the container like this:
+If you need more advanced features, you can completely override the default configuration by modifying the [smb.conf](https://codeberg.org/GamePlayer-8/samba/blob/master/smb.conf) file in this repo, and binding your custom config to the container like this:
 
 ```yaml
 volumes:
@@ -101,7 +120,7 @@ volumes:
 
 ### How do I configure multiple users?
 
-If you want to configure multiple users, you can bind the [users.conf](https://github.com/dockur/samba/blob/master/users.conf) file to the container as follows:
+If you want to configure multiple users, you can bind the [users.conf](https://codeberg.org/GamePlayer-8/samba/blob/master/users.conf) file to the container as follows:
 
 ```yaml
 volumes:
@@ -121,15 +140,15 @@ where:
 - `homedir` Optional field for setting the home directory of the user. 
 
 ## Stars 🌟
-[![Stars](https://starchart.cc/dockur/samba.svg?variant=adaptive)](https://starchart.cc/dockur/samba)
+[![Stars](https://starchart.cc/GamePlayer-8/samba.svg?variant=adaptive)](https://starchart.cc/GamePlayer-8/samba)
 
-[build_url]: https://github.com/dockur/samba/
-[hub_url]: https://hub.docker.com/r/dockurr/samba
-[tag_url]: https://hub.docker.com/r/dockurr/samba/tags
-[pkg_url]: https://github.com/dockur/samba/pkgs/container/samba
+[build_url]: https://github.com/GamePlayer-8/samba/
+[hub_url]: https://hub.docker.com/r/gameplayer-8/samba
+[tag_url]: https://hub.docker.com/r/gameplayer-8/samba/tags
+[pkg_url]: https://github.com/GamePlayer-8/samba/pkgs/container/samba
 
-[Build]: https://github.com/dockur/samba/actions/workflows/build.yml/badge.svg
-[Size]: https://img.shields.io/docker/image-size/dockurr/samba/latest?color=066da5&label=size
-[Pulls]: https://img.shields.io/docker/pulls/dockurr/samba.svg?style=flat&label=pulls&logo=docker
-[Version]: https://img.shields.io/docker/v/dockurr/samba/latest?arch=amd64&sort=semver&color=066da5
-[Package]: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fipitio.github.io%2Fbackage%2Fdockur%2Fsamba%2Fsamba.json&query=%24.downloads&logo=github&style=flat&color=066da5&label=pulls
+[Build]: https://github.com/GamePlayer-8/samba/actions/workflows/build.yml/badge.svg
+[Size]: https://img.shields.io/docker/image-size/gameplayer-8/samba/latest?color=066da5&label=size
+[Pulls]: https://img.shields.io/docker/pulls/gameplayer-8/samba.svg?style=flat&label=pulls&logo=docker
+[Version]: https://img.shields.io/docker/v/gameplayer-8/samba/latest?arch=amd64&sort=semver&color=066da5
+[Package]: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fipitio.github.io%2Fbackage%2FGamePlayer-8%2Fsamba%2Fsamba.json&query=%24.downloads&logo=github&style=flat&color=066da5&label=pulls
