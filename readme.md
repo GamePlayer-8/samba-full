@@ -6,7 +6,6 @@
 [![Build]][build_url]
 [![Version]][tag_url]
 [![Size]][tag_url]
-[![Package]][pkg_url]
 [![Pulls]][hub_url]
 
 </div></h1>
@@ -145,10 +144,8 @@ where:
 [build_url]: https://github.com/GamePlayer-8/samba-full/
 [hub_url]: https://hub.docker.com/r/gameplayer8/samba-full
 [tag_url]: https://hub.docker.com/r/gameplayer8/samba-full/tags
-[pkg_url]: https://github.com/GamePlayer-8/samba-full/pkgs/container/samba-full
 
 [Build]: https://github.com/GamePlayer-8/samba-full/actions/workflows/build.yml/badge.svg
 [Size]: https://img.shields.io/docker/image-size/gameplayer8/samba-full/latest?color=066da5&label=size
 [Pulls]: https://img.shields.io/docker/pulls/gameplayer8/samba-full.svg?style=flat&label=pulls&logo=docker
 [Version]: https://img.shields.io/docker/v/gameplayer8/samba-full/latest?arch=amd64&sort=semver&color=066da5
-[Package]: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fipitio.github.io%2Fbackage%2FGamePlayer-8%2Fsamba-full%2Fsamba-full.json&query=%24.downloads&logo=github&style=flat&color=066da5&label=pulls
