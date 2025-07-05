@@ -1,5 +1,5 @@
 <div align="center">
-<a href="https://codeberg.org/GamePlayer-8/samba-full"><img src="https://raw.githubusercontent.com/GamePlayer-8/samba-full/main/.github/logo.png" title="Logo" style="max-width:100%;" width="256" /></a>
+<a href="https://codeberg.org/GamePlayer-8/samba-full"><img src=".github/logo.png" title="Logo" style="max-width:100%;" width="256" /></a>
 </div>
 <div align="center">
 
