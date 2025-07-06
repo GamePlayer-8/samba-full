@@ -3,7 +3,12 @@
 </div>
 <div align="center">
 
+[![XaviaMa]][xaviama_url]
+[![Codeberg]][codeberg_url]
 [![Build]][build_url]
+[![TransRights]][transrights_url]
+[![Enbyware]][enbyware_url]
+[![License]][license_url]
 [![Version]][tag_url]
 [![Size]][tag_url]
 [![Pulls]][hub_url]
@@ -141,11 +146,21 @@ where:
 ## Stars 🌟
 [![Stars](https://starchart.cc/GamePlayer-8/samba-full.svg?variant=adaptive)](https://starchart.cc/GamePlayer-8/samba-full)
 
+[xaviama_url]: https://ci.chimmie.k.vu/repos/19
+[codeberg_url]: https://ci.codeberg.org/repos/14840
 [build_url]: https://github.com/GamePlayer-8/samba-full/
+[transrights_url]: https://en.wikipedia.org/wiki/Transgender_rights_movement
+[enbyware_url]: https://en.wikipedia.org/wiki/Non-binary
+[license_url]: license.md
 [hub_url]: https://hub.docker.com/r/gameplayer8/samba-full
 [tag_url]: https://hub.docker.com/r/gameplayer8/samba-full/tags
 
+[XaviaMa]: https://ci.chimmie.k.vu/api/badges/19/status.svg
+[Codeberg]: https://ci.codeberg.org/api/badges/14840/status.svg
 [Build]: https://github.com/GamePlayer-8/samba-full/actions/workflows/build.yml/badge.svg
+[TransRights]: https://pride-badges.pony.workers.dev/static/v1?label=trans%20rights&stripeWidth=6&stripeColors=5BCEFA,F5A9B8,FFFFFF,F5A9B8,5BCEFA
+[Enbyware]: https://pride-badges.pony.workers.dev/static/v1?label=enbyware&labelColor=%23555&stripeWidth=8&stripeColors=FCF434%2CFFFFFF%2C9C59D1%2C2C2C2C
+[License]: https://img.shields.io/github/license/GamePlayer-8/samba-full
 [Size]: https://img.shields.io/docker/image-size/gameplayer8/samba-full/latest?color=066da5&label=size
 [Pulls]: https://img.shields.io/docker/pulls/gameplayer8/samba-full.svg?style=flat&label=pulls&logo=docker
 [Version]: https://img.shields.io/docker/v/gameplayer8/samba-full/latest?arch=amd64&sort=semver&color=066da5
