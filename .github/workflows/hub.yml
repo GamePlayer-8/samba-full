@@ -12,7 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - 
+
+    -
+      name: Patch README.md
+      run: |
+        sudo apt-get update; sudo apt-get install -y sed
+        sed -i 's|.github/logo.png|https://codeberg.org/GamePlayer-8/samba-full/raw/branch/main/.github/logo.png|g' README.md
+
+    -
       name: Docker Hub Description
       uses: peter-evans/dockerhub-description@v4
       with:
